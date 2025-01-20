@@ -1,33 +1,20 @@
 // create web server
-// create a route for /comments
-// create a route for /comments/new
-// create a route for /comments/:id
-// create a route for /comments/:id/edit
-// create a route for /comments/:id/delete
+const express = require('express');
+const app = express();
+const port = 3000;
 
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended: true}));
-
-var comments = [
-    {id: 1, author: 'John', text: 'I love this place!'},
-    {id: 2, author: 'Jane', text: 'I hate this place!'},
-    {id: 3, author: 'Jack', text: 'I am neutral about this place!'}
+// create a list of comments
+const comments = [
+  { name: 'John', comment: 'Hello World!' },
+  { name: 'Mary', comment: 'Nice to meet you!' }
 ];
 
-app.get('/', function(req, res){
-    res.render('comments', {comments: comments});
+// create a route for comments
+app.get('/comments', (req, res) => {
+  res.json(comments);
 });
 
-app.post('/comments', function(req, res){
-    var newComment = {
-        id: comments.length + 1,
-        author: req.body.author,
-        text: req.body.text
-        };
-        comments.push(newComment);
-        res.redirect('/');
-    });
+// start the server
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
